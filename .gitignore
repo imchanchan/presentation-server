@@ -1,0 +1,37 @@
+node_modules
+dist
+build
+*.log
+.DS_Store
+slide-edits.json
+slide-edits.json.backup*
+
+# 환경 변수 파일
+.env
+.env.local
+.env.*.local
+
+# IDE/에디터 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 운영체제
+Thumbs.db
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# 로그 파일
+log.txt
+
+# 대체 파일 텍스트
+replace_slide*_texts.sh
+slide*_2025*.json
+slideTexts.constants.backup*
+
+/.data
