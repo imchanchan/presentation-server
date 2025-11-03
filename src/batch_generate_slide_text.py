@@ -1,7 +1,3 @@
-# ---------------------------
-# 경로 설정 및 환경 로드
-# ---------------------------
-
 from prompt import build_prompt
 
 
@@ -76,7 +72,7 @@ def save_split_json_results(content: str, start:int, end:int, output_dir: Path, 
         saved_files.append(out_path)
         print(f"✅ {prefix}{idx} 저장 완료 → {out_path}")
 
-    print(f"\n🎉 총 {len(saved_files)}개 JSON 저장 완료")
+    print(f"\n 총 {len(saved_files)}개 JSON 저장 완료")
     return saved_files
 
 # ---------------------------
@@ -121,11 +117,11 @@ def save_slide_json(slide_num: int, slide_json: dict):
 # 메인 배치 처리
 # ---------------------------
 def main():
-    # 🧩 1. HTML 로드 (수정 필요 시 이 부분만 교체)
+    # 1) HTML 로드 (수정 필요 시 이 부분만 교체)
     with open(DATA_PATH, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 🧩 2. 배치 그룹 정의
+    # 2) 배치 그룹 정의
     batches = [
         (1, 3, "표지 + 외내부동기 + 아이템필요성"),
         (4, 5, "TAM·SAM·SOM + 시장분석"),
@@ -136,7 +132,7 @@ def main():
         (17, 18, "팀소개 + 비전 및 결론"),
     ]
 
-    # 🧩 3. 각 배치 실행
+    # 3) 각 배치 실행
     for (start, end, desc) in batches:
         print(f"\n🚀 [배치 {start}-{end}] {desc} 생성 중...")
 
@@ -162,14 +158,14 @@ JSON 구조는 슬라이드별 정의를 엄격히 따라야 하며, 불필요�
         results = call_gpt_with_context(html, instruction)
         
         output_dir = Path("/Users/chanchan/Downloads/MVP IR DECK (3)/slides")
-        save_split_json_results(result, start, end , output_dir)
+        save_split_json_results(results, start, end , output_dir)
 
         # for i, slide_json in enumerate(results, start=start):
         #     save_slide_json(i, slide_json)
 
         print(f"✅ 배치 {start}-{end} 완료 ({end-start+1}개 슬라이드)\n")
 
-    print("\n🎉 모든 배치(8덩어리) 생성 완료!")
+    print("\n 모든 배치(8덩어리) 생성 완료!")
 
 
 if __name__ == "__main__":
