@@ -32,6 +32,10 @@ Thumbs.db
 venv/
 env/
 
+# Python
+__pycache__/
+*.py[cod]
+
 # 로그 파일
 log.txt
 
