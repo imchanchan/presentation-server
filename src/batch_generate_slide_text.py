@@ -153,12 +153,11 @@ JSON 구조는 슬라이드별 정의를 엄격히 따라야 하며, 불필요�
 ** 최종 추출되는 json 객체는 {end-start+1}개입니다.**
         """ + prompt
 
-        print('프롬프트: ', instruction)
+        # print('프롬프트: ', instruction)
 
         results = call_gpt_with_context(html, instruction)
         
-        output_dir = Path("/Users/chanchan/Downloads/MVP IR DECK (3)/slides")
-        save_split_json_results(results, start, end , output_dir)
+        save_split_json_results(results, start, end, OUTPUT_DIR)
 
         # for i, slide_json in enumerate(results, start=start):
         #     save_slide_json(i, slide_json)
