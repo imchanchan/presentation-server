@@ -11,6 +11,12 @@ slide-edits.json.backup*
 .env.local
 .env.*.local
 
+
+# --- Claude / AI Agent local cache ---
+.claude/
+.claude/file-history/
+.claude/file-history/**
+
 # IDE/에디터 설정
 .vscode/
 .idea/
