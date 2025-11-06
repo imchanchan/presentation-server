@@ -1,9 +1,13 @@
 import asyncio
 import json
 import os
+import random
 import re
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+from typing import List, Tuple
+from time import perf_counter
 
 import aiohttp
 from dotenv import load_dotenv
@@ -31,6 +35,51 @@ IMMUTABLE_META_KEYS = {"leftNumber", "leftTitle", "leftSubtitle", "rightTitle", 
 MODEL = "o4-mini-2025-04-16"
 API_URL = "https://api.openai.com/v1/chat/completions"
 REQUEST_TIMEOUT = aiohttp.ClientTimeout(total=120)
+
+# 동시 실행 설정 및 재시도 전략
+CONCURRENCY = 3
+MAX_ATTEMPTS_PER_BATCH = 3
+BASE_BACKOFF_SECONDS = 2.0
+
+# 디버그 시 실패한 배치 raw 응답 저장
+DEBUG_DUMP_FAILED_OUTPUT = os.getenv("DEBUG_DUMP_FAILED_OUTPUT", "0") == "1"
+
+
+@dataclass
+class Batch:
+    start: int
+    end: int
+    desc: str
+    attempt: int = 1
+
+
+def build_instruction_for_batch(start: int, end: int) -> str:
+    """배치 범위에 맞춘 instruction 문자열 생성."""
+    prompt_body = ""
+    for idx in range(start, end + 1):
+        prompt_body += (
+            "=" * 10
+            + "\n"
+            + f"해당슬라이드번호는 {idx} 슬라이드입니다. 추출 프롬프트는 다음과 같습니다.\n >>"
+            + build_prompt(idx)
+            + "\n"
+            + "=" * 10
+            + "\n"
+        )
+
+    instruction = f"""
+아래 HTML 문서를 기반으로, 슬라이드 {start}~{end}에 해당하는 내용을 각각 독립된 JSON 객체로 생성하세요.
+각 슬라이드는 --- 로 구분하세요.
+JSON 구조는 슬라이드별 정의를 엄격히 따라야 하며, 불필요한 설명문이나 코드 블록은 포함하지 마세요.
+
+[가장 중요]
+** 슬라이드별 추출 형식을 명심하세요! **
+** 추출형식에서 제시된 json 키값을 수정하면 절대 안됩니다. 그대로 사용합니다. 새로운 키를 추가하거나 이름을 바꾸지 마세요. **
+**JSON 구조(중괄호·대괄호·쉼표·따옴표)와 필드 순서는 예시와 동일하게 유지하세요.**
+** 최종 추출되는 json 객체는 {end-start+1}개입니다.**
+    """
+
+    return instruction + prompt_body
 
 
 def save_fallback_text(identifier: str, raw_text: str) -> Path:
@@ -119,66 +168,143 @@ async def call_gpt_with_context(session: aiohttp.ClientSession, html: str, instr
     return result
 
 
-# ---------------------------
-# 슬라이드 저장 함수
-# ---------------------------
-def save_slide_json(slide_num: int, slide_json: dict):
-    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    out_path = OUTPUT_DIR / f"slide{slide_num}_{timestamp}.json"
-    with out_path.open("w", encoding="utf-8") as f:
-        json.dump(slide_json, f, ensure_ascii=False, indent=2)
-    print(f"✅ slide{slide_num} 저장 완료 → {out_path}")
+async def run_one_batch(session: aiohttp.ClientSession, html: str, batch: Batch) -> Tuple[bool, str]:
+    """배치 1건 실행."""
+    start, end = batch.start, batch.end
+    label = f"{start}-{end}"
+    expected_count = end - start + 1
+    started_at = perf_counter()
+
+    try:
+        await asyncio.sleep(0.8)  # 가벼운 rate-limit 완화 딜레이
+
+        instruction = build_instruction_for_batch(start, end)
+        result_text = await call_gpt_with_context(
+            session=session,
+            html=html,
+            instruction=instruction,
+            batch_label=label,
+        )
+
+        if not result_text:
+            elapsed = perf_counter() - started_at
+            return False, (
+                f"⚠️ 배치 {label} 실패 (시도 {batch.attempt}/{MAX_ATTEMPTS_PER_BATCH}) "
+                f"(소요 {elapsed:.2f}s)"
+            )
+
+        saved_files = save_split_json_results(
+            content=result_text,
+            start=start,
+            end=end,
+            output_dir=OUTPUT_DIR,
+            prefix="slide",
+        )
+
+        if len(saved_files) != expected_count:
+            elapsed = perf_counter() - started_at
+            msg = (
+                f"⚠️ 배치 {label} 저장 개수 불일치 "
+                f"(기대 {expected_count}개, 실제 {len(saved_files)}개) "
+                f"(시도 {batch.attempt}/{MAX_ATTEMPTS_PER_BATCH}) "
+                f"(소요 {elapsed:.2f}s)"
+            )
+            if DEBUG_DUMP_FAILED_OUTPUT:
+                fallback_path = save_fallback_text(f"batch_{label}_mismatch", result_text)
+                msg += f" → raw 저장: {fallback_path}"
+            return False, msg
+
+        elapsed = perf_counter() - started_at
+        return True, (
+            f"✅ 배치 {label} 완료 ({len(saved_files)}개 슬라이드 저장) "
+            f"(시도 {batch.attempt}/{MAX_ATTEMPTS_PER_BATCH}) "
+            f"(소요 {elapsed:.2f}s)"
+        )
+
+    except Exception as exc:  # 예상치 못한 예외는 로그 후 재시도
+        elapsed = perf_counter() - started_at
+        msg = (
+            f"❌ 배치 {label} 예외 발생: {exc} "
+            f"(시도 {batch.attempt}/{MAX_ATTEMPTS_PER_BATCH}) "
+            f"(소요 {elapsed:.2f}s)"
+        )
+        if DEBUG_DUMP_FAILED_OUTPUT:
+            fallback_path = save_fallback_text(f"batch_{label}_exception", str(exc))
+            msg += f" → raw 저장: {fallback_path}"
+        return False, msg
 
 
-# ---------------------------
-# 메인 배치 처리
-# ---------------------------
-async def main():
-    # 1) HTML 로드 (수정 필요 시 이 부분만 교체)
+async def process_batches_round(session: aiohttp.ClientSession, html: str, batches: List[Batch]) -> Tuple[List[Batch], List[str]]:
+    """
+    한 라운드에서 여러 배치를 동시에 처리하고 실패한 것만 반환.
+    """
+    sem = asyncio.Semaphore(CONCURRENCY)
+    logs: List[str] = []
+    failed_next: List[Batch] = []
+
+    async def runner(batch: Batch) -> None:
+        async with sem:
+            ok, msg = await run_one_batch(session, html, batch)
+            logs.append(msg)
+            if not ok and batch.attempt < MAX_ATTEMPTS_PER_BATCH:
+                failed_next.append(Batch(batch.start, batch.end, batch.desc, batch.attempt + 1))
+
+    tasks = [asyncio.create_task(runner(b)) for b in batches]
+    await asyncio.gather(*tasks)
+
+    return failed_next, logs
+
+
+async def run_all_batches_until_stable(session: aiohttp.ClientSession, html: str, initial_batches: List[Batch]) -> None:
+    """
+    실패한 배치를 재시도하면서 안정 상태까지 반복 실행.
+    """
+    round_idx = 1
+    queue = list(initial_batches)
+
+    while queue:
+        print(f"\n>> 라운드 {round_idx} 시작 — {len(queue)}개 배치 동시 실행")
+        failed_next, logs = await process_batches_round(session, html, queue)
+
+        for line in logs:
+            print(line)
+
+        if not failed_next:
+            print(f"\n✅ 라운드 {round_idx}에서 모두 성공 — 종료")
+            return
+
+        still_retryable = [b for b in failed_next if b.attempt <= MAX_ATTEMPTS_PER_BATCH]
+        if not still_retryable:
+            print("\n⚠️ 재시도 가능한 배치 없음 — 종료")
+            return
+
+        backoff = BASE_BACKOFF_SECONDS * (2 ** (round_idx - 1)) + random.uniform(0, 0.5)
+        print(f"\n⏳ 다음 라운드 전 대기: {backoff:.2f}s (백오프)")
+        await asyncio.sleep(backoff)
+
+        queue = still_retryable
+        round_idx += 1
+
+
+async def main() -> None:
     with open(DATA_PATH, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # 2) 배치 그룹 정의
-    batches = [
-        (1, 3, "표지 + 외내부동기 + 아이템필요성"),
-        (4, 5, "TAM·SAM·SOM + 시장분석"),
-        (6, 8, "해결방안 + 핵심가치 + 개발방안"),
-        (9, 10, "고객검증 + 경쟁사분석 및 경쟁력"),
-        (11, 14, "비즈니스모델 + 수익모델 + 시장전략 + 성과"),
-        (15, 16, "로드맵 + 자금조달 및 소요계획"),
-        (17, 18, "팀소개 + 비전 및 결론"),
+    initial_batches = [
+        Batch(1, 3, "표지 + 외내부동기 + 아이템필요성"),
+        Batch(4, 5, "TAM·SAM·SOM + 시장분석"),
+        Batch(6, 8, "해결방안 + 핵심가치 + 개발방안"),
+        Batch(9, 10, "고객검증 + 경쟁사분석 및 경쟁력"),
+        Batch(11, 14, "비즈니스모델 + 수익모델 + 시장전략 + 성과"),
+        Batch(15, 16, "로드맵 + 자금조달 및 소요계획"),
+        Batch(17, 18, "팀소개 + 비전 및 결론"),
     ]
 
-    # 3) 각 배치 실행
     async with aiohttp.ClientSession(timeout=REQUEST_TIMEOUT) as session:
-        for (start, end, desc) in batches:
-            print(f"\n🚀 [배치 {start}-{end}] {desc} 생성 중...")
+        print("🚀 8개 배치를 동시에 실행합니다.")
+        await run_all_batches_until_stable(session, html, initial_batches)
 
-            prompt = ""
-            for i in range(start, end + 1):
-                prompt += "=" * 10 + "\n" + f"해당슬라이드번호는 {i} 슬라이드입니다. 추출 프롬프트는 다음과 같습니다.\n >>" + build_prompt(i) + "\n" + "=" * 10 + "\n"
-
-            instruction = f"""
-아래 HTML 문서를 기반으로, 슬라이드 {start}~{end}에 해당하는 내용을 각각 독립된 JSON 객체로 생성하세요.
-각 슬라이드는 --- 로 구분하세요.
-JSON 구조는 슬라이드별 정의를 엄격히 따라야 하며, 불필요한 설명문이나 코드 블록은 포함하지 마세요.
-
-[가장 중요]
-** 슬라이드별 추출 형식을 명심하세요! **
-** 추출형식에서 제시된 json 키값을 수정하면 절대 안됩니다. 그대로 사용합니다. 새로운 키를 추가하거나 이름을 바꾸지 마세요. **
-**JSON 구조(중괄호·대괄호·쉼표·따옴표)와 필드 순서는 예시와 동일하게 유지하세요.**
-** 최종 추출되는 json 객체는 {end-start+1}개입니다.**
-            """ + prompt
-
-            results = await call_gpt_with_context(session, html, instruction, f"{start}_{end}")
-
-            if results:
-                save_split_json_results(results, start, end, OUTPUT_DIR)
-                print(f"✅ 배치 {start}-{end} 완료 ({end-start+1}개 슬라이드)\n")
-
-            await asyncio.sleep(1)
-
-    print("\n 모든 배치(8덩어리) 생성 완료!")
+    print("\n🎉 모든 배치 처리 파이프라인 종료")
 
 
 if __name__ == "__main__":
