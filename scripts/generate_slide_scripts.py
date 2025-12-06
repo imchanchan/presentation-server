@@ -1,5 +1,20 @@
-#!/usr/bin/env python3
-"""Generate narration scripts for each slide by calling the OpenAI API."""
+
+'''
+[슬라이드 Json기반으로 slide_scripts/slide_scripts_{timestamp}.json 대본 생성]
+
+1. 실행방법
+python generate_slide_scripts.py --slides-dir slides --output-dir slide_scripts --model gpt-4o-mini --style concise --language ko --temperature 0.6 --max-slides 10 --batch-size 1
+2. 실행결과
+slide_scripts/slide_scripts_{timestamp}.json 파일이 생성됩니다.
+3. 실행결과 예시
+{
+    "slideNumber": 1,
+    "title": "슬라이드 1 제목",
+    "narration": "슬라이드 1 대본",
+    "talkPoints": ["슬라이드 1 핵심 포인트 1", "슬라이드 1 핵심 포인트 2", "슬라이드 1 핵심 포인트 3"]
+}
+
+'''
 
 from __future__ import annotations
 
