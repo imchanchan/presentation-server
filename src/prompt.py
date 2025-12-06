@@ -1570,11 +1570,6 @@ HTML 내 실제 명칭이 다를 경우 그대로 사용하되, 의미상 매칭
 
 ### 추출형태
 {{
-  "headerNumber": "",
-  "headerMainTitle": "",
-  "headerEnglishTitle": "",
-  "subtitle": "",
-  "pageNumber": "",
   "fundingPlanTitle": "",
   "spendingPlanTitle": "",
   "fundingPlan1Year": "",
