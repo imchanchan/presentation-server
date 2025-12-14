@@ -75,7 +75,7 @@ def _extract_json_text(content: str) -> str | None:
 def call_gpt(prompt: str) -> dict:
     """GPT에 프롬프트를 보내고 JSON 결과를 반환."""
     response = client.chat.completions.create(
-        model = "o4-mini-2025-04-16"
+        model = "o4-mini-2025-04-16",
         messages=[
             {"role": "system", "content": "너는 HTML 문서를 분석해 슬라이드 데이터를 JSON으로 생성하는 전문가야."},
             {"role": "user", "content": prompt},
@@ -2102,9 +2102,7 @@ def main() -> None:
 
     end = "문서: " + html[len(html)//2:]
     for i in range(12,18):  # 1~18까지
-      if i==10:
-        end = '''경쟁사 분석</h1>\n<br><table id='47' style='font-size:18px'><thead><tr><td>구분</td><td>동원시스템즈</td><td>다이와제관</td><td>Ball Corp</td><td>#레토르트캔</td></tr></thead><tbody><tr><td>소개</td><td>대형 제관사로 대량 생산 기반의 표준형 알루미늄 캔 공급</td><td>일본계 글로벌 제관사로 대형 음료사 중심의 대량</td><td>미국 기반 글로벌 제관사로 북미·유럽 중심의 대량 NB캔</td><td>120°C 레토르트 살균이 가능한 친환경 알루미늄</td></tr></tbody></table>\n<table id='48' style='font-size:16px'><thead><tr><td></td><td></td><td>NB캔 공급</td><td>공급</td><td>NB캔 제조 기술 기반 OEM/ODM, 설비 수출, 패키징 플랫폼 솔루션</td></tr></thead><tbody><tr><td>가격</td><td>단가 기준 대량 할인 적용, 소량 단가 상대적으로 높음</td><td>단가 기준 대량 할인 적용, 소량 단가 상대적으로 높음</td><td>단가 기준 대량 할인 적용, 소량 단가 상대적으로 높음</td><td>소량·커스텀 생산에 특화된 단가 구조로, 중소 RTD·가공식품 업체 대상 경쟁력 있는 단가 제공</td></tr><tr><td>기술</td><td>표준 NB캔 기술 중심, 레토르트용 캔은 일부 제품군에 한정</td><td>표준 NB캔 기술 중심, 레토르트용 캔은 일부 제품군에 한정</td><td>표준 NB캔 기술 중심, 레토르트용 캔은 일부 제품군에 한정</td><td>120°C 레토르트 살균이 가능한 NB캔 기술 보유, 희소성 높음</td></tr><tr><td>생산 유연성</td><td>대량·표준 생산 중심, 소량·커스텀 대응 한계 있음</td><td>대량·표준 생산 중심, 소량·커스텀 대응 한계 있음</td><td>대량·표준 생산 중심, 소량·커스텀 대응 한계 있음</td><td>소량·다품종·커스텀 생산에 강점, 중소·스타트업 고객 대응력 우수</td></tr><tr><td>서비스</td><td>제품 공급 중심, 기술지원은 제한적</td><td>제품 공급 중심, 기술지원은 제한적</td><td>제품 공급 중심, 기술지원은 제한적</td><td>필름-제관 통합 기술지원, OEM/ODM·설비 수출·패키징 플랫폼 솔루션 제공</td></tr></tbody></table> '''
-      
+
       print(f">> GPT 슬라이드 {i} 생성 중...")
 
       prompt = base + build_prompt(i) + end
