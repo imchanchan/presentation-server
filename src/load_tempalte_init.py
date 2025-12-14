@@ -12,7 +12,7 @@ from pymongo.errors import ConfigurationError
 
 
 
-DEFAULT_COLLECTION_NAME = "project_1"
+DEFAULT_COLLECTION_NAME = "retort"
 
 
 def load_env():
