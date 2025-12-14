@@ -1,4 +1,5 @@
 from __future__ import annotations
+from email import message
 import json
 from pathlib import Path
 from datetime import datetime
@@ -22,7 +23,7 @@ if not os.getenv("OPENAI_API_KEY"):
         "OPENAI_API_KEY를 불러오지 못했습니다. .env 위치와 키 값을 다시 확인하세요."
     )
 
-DATA_PATH = ROOT_DIR / ".data" / "retort_1213.json"
+DATA_PATH = ROOT_DIR / ".data" / "EX7.json"
 OUTPUT_DIR = ROOT_DIR / "slides"
 
 IMMUTABLE_META_KEYS = {"leftNumber", "leftTitle", "leftSubtitle", "rightTitle", "rightNumber"}
@@ -72,16 +73,39 @@ def _extract_json_text(content: str) -> str | None:
     return None
 
 
-def call_gpt(prompt: str) -> dict:
+# def call_gpt(prompt: str) -> dict:
+#     """GPT에 프롬프트를 보내고 JSON 결과를 반환."""
+#     response = client.chat.completions.create(
+#         model = "o4-mini-2025-04-16",
+#         messages=[
+#             {"role": "system", "content": "너는 HTML 문서를 분석해 슬라이드 데이터를 JSON으로 생성하는 전문가야."},
+#             {"role": "user", "content": prompt},
+#         ],
+#         temperature=1.0        
+#     )
+
+#     content = response.choices[0].message.content.strip()
+
+#     candidates: list[str] = []
+#     extracted = _extract_json_text(content)
+#     if extracted:
+#         candidates.append(extracted)
+
+#     candidates.append(content)
+
+#     for candidate in candidates:
+#         try:
+#             return json.loads(candidate)
+#         except json.JSONDecodeError:
+#             continue
+
+#     print("⚠️ JSON 디코딩 실패. 원문을 raw_output으로 저장합니다.")
+#     return {"raw_output": content}
+
+# ======
+
+def call_gpt(response: str) -> dict:
     """GPT에 프롬프트를 보내고 JSON 결과를 반환."""
-    response = client.chat.completions.create(
-        model = "o4-mini-2025-04-16",
-        messages=[
-            {"role": "system", "content": "너는 HTML 문서를 분석해 슬라이드 데이터를 JSON으로 생성하는 전문가야."},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=1.0,
-    )
 
     content = response.choices[0].message.content.strip()
 
@@ -101,6 +125,7 @@ def call_gpt(prompt: str) -> dict:
     print("⚠️ JSON 디코딩 실패. 원문을 raw_output으로 저장합니다.")
     return {"raw_output": content}
 
+# ====
 
 def remove_immutable_meta(data: dict) -> dict:
     for key in IMMUTABLE_META_KEYS:
@@ -2100,14 +2125,155 @@ def main() -> None:
   "값을 찾을 수 없으면 빈 문자열(\"\")로 두고, 배열은 빈 배열([])로 두세요.\n"
   "직관적이고 간결하게 핵심 문장만 추출하세요.\n\n")
 
-    end = "문서: " + html[len(html)//2:]
-    for i in range(12,18):  # 1~18까지
+    end = "문서: " + html
+    for i in range(2,3):  # 1~18까지
 
-      print(f">> GPT 슬라이드 {i} 생성 중...")
+        print(f">> GPT 슬라이드 {i} 생성 중...")
 
-      prompt = base + build_prompt(i) + end
-      slide_data = remove_immutable_meta(call_gpt(prompt))
-      save_slide_json(i, slide_data)
+        # prompt = base + build_prompt(i) + end
+        messages = [
+    { "role": "developer", "content":"""
+
+비즈니스의 핵심 가치를 꿰뚫어 설득의 논리를 설계하는 ‘프레젠테이션 기획자’입니다.
+단순히 내용을 나열하는 것이 아니라, 투자자와 청중의 관점에서 가장 매력적인 스토리라인을 구축하고 최적의 정보 구조를 설계합니다.
+방대한 사업 내용을 논리적인 흐름으로 재가공하여 시각화의 뼈대를 완성합니다.
+디자인 이전 단계에서 명확한 기획으로 비즈니스의 성공 확률을 높이고, 텍스트 너머의 비전을 구체적인 전략으로 바꾸는 역할을 수행합니다.
+
+공통 규칙:
+- 고객의 사업계획서 내용을 바탕으로만 작성한다. 
+- 결과물 출력시 변수명은 절대 수정하지 말고 그대로 출력해야 한다. 
+- 글자수 조건은 해당 변수에 맞게 반드시 지켜야 한다. 만약 최소, 최대 조건이 지켜지지 않으면 다시 생성해서라도 맞춰야 한다.
+- 존댓말, 비즈니스 문체로 작성한다.
+- 문장은 명확하고 논리적이어야 하며 군더더기를 제거한다.
+- 새로운 사실, 숫자, 근거를 임의로 추가하지 않는다.
+- 명사형 어미로 작성한다.
+
+[글자수 조건] - 매우 중요. 반드시 최소/최대 기준 충족할 것
+- mainHeading: 최소 20 ~ 최대 35자
+- issue1Title: 최소 3 ~ 최대 10자
+- issue1Description: 최소 55 ~ 최대 72자
+- issue2Title: 최소 3 ~ 최대 10자
+- issue2Description: 최소 55 ~ 최대 72자
+- issue3Title: 최소 3 ~ 최대 10자
+- issue3Description: 최소 55 ~ 최대 72자
+
+
+[변수 설명]
+- mainHeading: 우리 사업이 해결하려는 핵심 문제를 관통하는 한 문장
+- issue1Title: 첫 번째 문제 키워드
+- issue1Description: 첫 번째 문제 키워드에 대해 상세하게 설명
+- issue2Title: 두 번째 문제 키워드
+- issue2Description: 두 번째 문제 키워드에 대해 상세하게 설명
+- issue3Title: 세 번째 문제 키워드
+- issue3Description: 세 번째 문제 키워드에 대해 상세하게 설명
+
+[출력 규칙]
+- JSON형태로 반드시 출력한다.
+JSON 예시:
+{{
+  "title": "",
+  "mainHeading": "",
+  "description": "",
+  "issue1Title": "",
+  "issue1Description": "",
+  "issue2Title": "",
+  "issue2Description": "",
+  "issue3Title": "",
+  "issue3Description": ""
+}}
+
+
+""" },
+    { "role": "user", "content": """저희는 고물가와 배달 지연 문제를 해결하는 'AI 기반 초개인화 배달 플랫폼'입니다. 2040 직장인을 핵심 타겟으로 AI 메뉴 추천과 30분 내 책임 배송을 제공해 고객 편의를 극대화했습니다. 구독형 수익 모델과 데이터 기반 광고로 안정적인 매출을 창출하며, 소상공인에게는 효율적인 판로를 제공하는 상생 생태계를 구축합니다. 서초구 MVP 실증과 특허 확보를 통해 검증을 마쳤으며, 2029년 기업가치 2,000억 원 달성을 목표로 성장하겠습니다.""" },
+    { "role": "assistant", "content": """
+  "mainHeading": "높아진 배달 수수료 및 배달 지연 현상",
+  "issue1Title": "비효율성",
+  "issue1Description": "고객이 어떤 불편함을 느끼고 시간/비용적으로 얼마나 손해를 보고 있는지 구체적인 수치로 설명하세요.",
+  "issue2Title": "높은 비용",
+  "issue2Description": "기존의 방식이나 해결책이 왜 비싸고 접근하기 어려운지, 그로 인해 어떤 기회비용이 발생하는지 설명하세요.",
+  "issue3Title": "정보 부족",
+  "issue3Description": "고객이 올바른 결정을 내리는 데 필요한 정보가 왜 부족한지 이것이 어떤 결과를 낳는지 보여주세요."
+"""},
+    { "role": "user", "content": html }
+  ]
+
+#         messages = [
+#     { "role": "developer", "content":"""
+
+# 비즈니스의 핵심 가치를 꿰뚫어 설득의 논리를 설계하는 ‘프레젠테이션 기획자’입니다.
+# 단순히 내용을 나열하는 것이 아니라, 투자자와 청중의 관점에서 가장 매력적인 스토리라인을 구축하고 최적의 정보 구조를 설계합니다.
+# 방대한 사업 내용을 논리적인 흐름으로 재가공하여 시각화의 뼈대를 완성합니다.
+# 디자인 이전 단계에서 명확한 기획으로 비즈니스의 성공 확률을 높이고, 텍스트 너머의 비전을 구체적인 전략으로 바꾸는 역할을 수행합니다.
+
+# 공통 규칙:
+# - 고객의 사업계획서 내용을 바탕으로만 작성한다. 
+# - 결과물 출력시 변수명은 절대 수정하지 말고 그대로 출력해야 한다. 
+# - 글자수 조건은 해당 변수에 맞게 반드시 지켜야 한다. 만약 최소, 최대 조건이 지켜지지 않으면 다시 생성해서라도 맞춰야 한다.
+# - 존댓말, 비즈니스 문체로 작성한다.
+# - 문장은 명확하고 논리적이어야 하며 군더더기를 제거한다.
+# - 새로운 사실, 숫자, 근거를 임의로 추가하지 않는다.
+# - 명사형 어미로 작성한다.
+
+
+# [글자수 조건] - 매우 중요. 반드시 최소/최대 기준 충족할 것
+# - mainHeading: 최소 20 ~ 최대 35자
+# - issue1Title: 최소 3 ~ 최대 10자
+# - issue1Description: 최소 55 ~ 최대 72자
+# - issue2Title: 최소 3 ~ 최대 10자
+# - issue2Description: 최소 55 ~ 최대 72자
+# - issue3Title: 최소 3 ~ 최대 10자
+# - issue3Description: 최소 55 ~ 최대 72자
+
+
+# [변수 설명]
+# - mainHeading: 우리 사업이 해결하려는 핵심 문제를 관통하는 한 문장
+# - issue1Title: 첫 번째 문제 키워드
+# - issue1Description: 첫 번째 문제 키워드에 대해 상세하게 설명
+# - issue2Title: 두 번째 문제 키워드
+# - issue2Description: 두 번째 문제 키워드에 대해 상세하게 설명
+# - issue3Title: 세 번째 문제 키워드
+# - issue3Description: 세 번째 문제 키워드에 대해 상세하게 설명
+
+# [출력 규칙]
+# - JSON형태로 반드시 출력한다.
+# JSON 예시:
+# {{
+#   "title": "",
+#   "mainHeading": "",
+#   "description": "",
+#   "issue1Title": "",
+#   "issue1Description": "",
+#   "issue2Title": "",
+#   "issue2Description": "",
+#   "issue3Title": "",
+#   "issue3Description": ""
+# }}
+
+
+# """ },
+#     { "role": "user", "content": """저희는 고물가와 배달 지연 문제를 해결하는 'AI 기반 초개인화 배달 플랫폼'입니다. 2040 직장인을 핵심 타겟으로 AI 메뉴 추천과 30분 내 책임 배송을 제공해 고객 편의를 극대화했습니다. 구독형 수익 모델과 데이터 기반 광고로 안정적인 매출을 창출하며, 소상공인에게는 효율적인 판로를 제공하는 상생 생태계를 구축합니다. 서초구 MVP 실증과 특허 확보를 통해 검증을 마쳤으며, 2029년 기업가치 2,000억 원 달성을 목표로 성장하겠습니다.""" },
+#     { "role": "assistant", "content": """
+#   "mainHeading": "높아진 배달 수수료 및 배달 지연 현상",
+#   "issue1Title": "비효율성",
+#   "issue1Description": "고객이 어떤 불편함을 느끼고 시간/비용적으로 얼마나 손해를 보고 있는지 구체적인 수치로 설명하세요.",
+#   "issue2Title": "높은 비용",
+#   "issue2Description": "기존의 방식이나 해결책이 왜 비싸고 접근하기 어려운지, 그로 인해 어떤 기회비용이 발생하는지 설명하세요.",
+#   "issue3Title": "정보 부족",
+#   "issue3Description": "고객이 올바른 결정을 내리는 데 필요한 정보가 왜 부족한지 이것이 어떤 결과를 낳는지 보여주세요."
+# """},
+#     { "role": "user", "content": html }
+#   ]
+
+        print(messages)
+        response = client.chat.completions.create(
+            model="o4-mini-2025-04-16",
+            messages= messages,
+        )
+
+        # slide_data = remove_immutable_meta(call_gpt(prompt))
+        slide_data = remove_immutable_meta(call_gpt(response))
+      
+        save_slide_json(i, slide_data)
 
     print("\n🎉 모든 슬라이드 JSON 생성이 완료되었습니다!")
 
