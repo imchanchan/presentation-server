@@ -24,7 +24,7 @@ if not os.getenv("OPENAI_API_KEY"):
         "OPENAI_API_KEY를 불러오지 못했습니다. .env 위치와 키 값을 다시 확인하세요."
     )
 
-DATA_PATH = ROOT_DIR / ".data" / "EX7.json"
+DATA_PATH = ROOT_DIR / ".data" / "retort_1213.json"
 OUTPUT_DIR = ROOT_DIR / "slides"
 
 IMMUTABLE_META_KEYS = {"leftNumber", "leftTitle", "leftSubtitle", "rightTitle", "rightNumber"}
@@ -207,8 +207,7 @@ async def run_one_batch(session: aiohttp.ClientSession, html: str, batch: Batch)
             instruction=instruction,
             batch_label=label,
         )
-        messages.extend(call_logs)
-
+        messages.extend()
         if not result_text:
             elapsed = perf_counter() - started_at
             summary = (
@@ -329,11 +328,23 @@ async def run_all_batches_until_stable(session: aiohttp.ClientSession, html: str
         queue = still_retryable
         round_idx += 1
 
+def load_html() -> str:
+    """EX2.json에서 content.html 필드를 읽어 HTML 문자열 반환."""
+    if not DATA_PATH.exists():
+        raise FileNotFoundError(f"EX2.json 파일이 존재하지 않습니다: {DATA_PATH}")
+    with DATA_PATH.open(encoding="utf-8") as f:
+        data = json.load(f)
+
+    html = data.get("content", {}).get("html", "")
+    if not html:
+        raise ValueError("'content.html' 필드가 없습니다.")
+    return html
+
+
 
 async def main() -> None:
-    with open(DATA_PATH, "r", encoding="utf-8") as f:
-        html = f.read()
-
+    html = load_html()
+    
     initial_batches = [
         Batch(1, 3, "표지 + 외내부동기 + 아이템필요성"),
         Batch(4, 5, "TAM·SAM·SOM + 시장분석"),
