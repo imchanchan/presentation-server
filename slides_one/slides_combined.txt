@@ -1,0 +1,221 @@
+### slide10_20251219-162045.json
+mainHeading: 희소성 기술과 유연성으로 차별화된 경쟁 우위
+headerCompetitor1: 동원시스템즈
+headerCompetitor2: 다이와제관
+headerCompetitor3: Ball Corp
+headerOurCompany: 레토르트캔
+row1Competitor1: 대량 생산 중심의 표준형 알루미늄 캔 공급함
+row1Competitor2: 일부 레토르트용 NB캔 제품만 공급함
+row1Competitor3: 북미·유럽 중심 대형 NB캔 제조함
+row1OurCompany: 120°C 레토르트 대응 친환경 NB캔 전용 기술 보유함
+row2Competitor1: 대량 할인 체계로 비용 효율적이나 소량 단가 높음
+row2Competitor2: 대량 생산에 유리하나 소량 주문 대응 한계 있음
+row2Competitor3: 글로벌 네트워크로 대량 공급하나 커스터마이징 부족함
+row2OurCompany: 소량 맞춤 단가 구조로 중소기업에 경쟁력 제공함
+row3Competitor1: 풍부한 생산 인프라로 안정적 공급 가능함
+row3Competitor2: 일본계 기술로 품질 안정성 확보함
+row3Competitor3: 광범위 물류 네트워크로 대량 공략함
+row3OurCompany: 고내열·고차단·친환경 특화로 부가가치 창출함
+row4Competitor1: 소량·커스터마이징 대응 한계 존재함
+row4Competitor2: 유연 생산 공정 부족으로 대응 지연됨
+row4Competitor3: 커스터마이징 지원 미흡해 중소 고객 회피함
+row4OurCompany: OEM/ODM·설비 수출·플랫폼 통합으로 유연성 확보함
+
+### slide11_20251219-162045.json
+nodes: [{'id': 'customer', 'label': '브랜드'}, {'id': 'company', 'label': '제조사'}, {'id': 'partner1', 'label': 'OEM사'}, {'id': 'partner2', 'label': '현지딜러'}]
+customerToCompanyTop: 수요 예측 정보
+customerToCompanyBottom: 맞춤 NB캔 납품
+companyTopartner1Left: 제조 기술 이전
+companyTopartner1Right: 생산 위탁 요청
+companyTopartner2Top: 설비 수출
+companyTopartner2Bottom: 기술 지원
+
+### slide12_20251219-162045.json
+deliveryFeeTitle: - OEM/ODM 공급 -
+deliveryFeeList: • 친환경 NB캔 OEM 공급
+• 소량 맞춤형 생산
+• 설비 수출 연계 모델
+• 연간 플랫폼 구독
+adCostTitle: - 설비 수출 -
+adCostList: • NB캔 제조 설비 판매
+• 설치·교육 지원
+• 유지보수 패키지
+• 기술 라이선스
+yAxisLabel150: 150
+yAxisLabel100: 100
+yAxisLabel50: 50
+chartCategories: [{'key': 'category1', 'label': 'OEM/ODM', 'color': '#C8D2F8'}, {'key': 'category2', 'label': '설비수출', 'color': '#566FBF'}]
+chartData: [{'year': '2025', 'category1': '8', 'category2': '2'}, {'year': '2026', 'category1': '18', 'category2': '2'}, {'year': '2027', 'category1': '30', 'category2': '5'}, {'year': '2028', 'category1': '50', 'category2': '15'}]
+
+### slide13_20251219-162045.json
+mainTitle: 친환경 NB캔으로 시장 패러다임 전환
+subTitle: OEM/ODM·설비수출·플랫폼 구독 모델로 다각적 진출 전략 수립
+strategyCards: [{'title': '정부 지원 활용', 'description': '친환경 제조 설비 보조금과 세제 혜택 활용으로 초기 투자 부담을 완화함. 단계적 설비 확장 기반을 마련함.'}, {'title': '전시회 참여', 'description': '국내외 식음료·포장 전시회에 참가해 기술 시연과 바이어 네트워크를 구축함. 수출 협의와 시장 검증을 병행함.'}, {'title': '디지털 플랫폼', 'description': 'B2B 온라인 플랫폼을 통해 견적, 샘플 발주, 디자인 커스터마이징을 디지털화하여 접근 편의성을 강화함.'}]
+
+### slide14_20251219-162045.json
+tableHeaderYear1: 2025년
+tableHeaderYear2: 2026년
+tableHeaderYear3: 2027년
+tableHeaderYear4: 2028년
+row1Year1: 10억원
+row1Year2: 21억원
+row1Year3: 36.98억원
+row1Year4: 69.98억원
+row2Year1: 0.2억원
+row2Year2: 0.2억원
+row2Year3: 0.5억원
+row2Year4: 1.5억원
+row3Year1: 5억원
+row3Year2: 10억원
+row3Year3: 30억원
+row3Year4: 70억원
+row4Year1: 2명
+row4Year2: 4명
+row4Year3: 7명
+row4Year4: 12명
+row5Year1: 특허 1건
+row5Year2: 특허 3건
+row5Year3: 특허 5건
+row5Year4: 특허 3건
+row6Year1: 식품안전
+row6Year2: 벤처인증
+row6Year3: ISO 인증
+row6Year4: GS 인증
+row7Year1: 5만개
+row7Year2: 10만개
+row7Year3: 30만개
+row7Year4: 60만개
+
+### slide15_20251219-162045.json
+mainTitle: 2030년 친환경 NB캔 글로벌 표준화 실현
+phase1YearGoal: 2025년
+시제품 검증
+phase1ObjectiveTitle: 목표: 시제품 10개 제작
+phase1Strategy: 내면 코팅·구조 설계 검증과 고온 살균 테스트를 완료하여 시제품 품질을 확보함.
+phase2YearGoal: 2026년
+양산 준비
+phase2ObjectiveTitle: 목표: OEM 공급 개시
+phase2Strategy: 양산 설비 구축 및 고객용 샘플 공급으로 OEM/ODM 채널을 본격화함.
+phase3YearGoal: 2027년
+해외 진출
+phase3ObjectiveTitle: 목표: 아세안 수출 개시
+phase3Strategy: 현지 파트너와 제휴하여 설비 수출과 패키징 플랫폼을 통한 시장 확장을 추진함.
+phase4YearGoal: 2028년
+플랫폼 고도화
+phase4ObjectiveTitle: 목표: 구독형 모델 런칭
+phase4Strategy: B2B 디지털 플랫폼을 고도화하여 구독형 패키징 솔루션을 출시함.
+
+### slide16_20251219-162045.json
+fundingPlan1Year: 2025년
+fundingPlan1Content: 친환경 보조금 - 2억 원
+신보 융자 - 1억 원
+fundingPlan2Year: 2026년
+fundingPlan2Content: 초기창업패키지 - 3억 원
+Angel 투자 - 1억 원
+fundingPlan3Year: 2027년
+fundingPlan3Content: Seed 투자 - 5억 원
+R&D 과제 - 2억 원
+fundingPlan4Year: 2028년
+fundingPlan4Content: Series A - 20억 원
+TIPS 지원 - 5억 원
+
+### slide17_20251219-162045.json
+team1Position: 대표
+team1Name: 김민준
+team1Description: 스타트업 경영 및 IR 총괄 8년
+금속·필름 복합공정 전문 지식
+국내외 OEM/ODM 공급 경험
+team2Position: 기술책임
+team2Name: 이서현
+team2Description: 코팅·내열성 연구 6년
+실용신안·특허 출원 주도
+공정 자동화 시스템 구축
+team3Position: 디자인PM
+team3Name: 박지후
+team3Description: 패키징 디자인 7년 경력
+사용자 경험 최적화 전문
+브랜딩 및 상표 기획 수행
+team4Position: 영업총괄
+team4Name: 정하은
+team4Description: B2B 영업 5년 경력
+국내외 파트너 네트워크 구축
+수출 및 전시회 협상 담당
+
+### slide18_20251219-162045.json
+visionStatement: 친환경 레토르트 NB캔으로 글로벌 시장 선도
+coreMessage: 지속 가능한 포장 혁신으로 탄소 배출 저감과 식품 안전을 동시에 실현하겠습니다.
+closingRemark: 대표자: 김민준
+회사명: 레토르트캔
+연락처: 010-1234-5678
+이메일: contact@ncan.co.kr
+
+### slide1_20251219-162045.json
+subtitle: 알루미늄 NB캔 사업계획서 발표
+mainTitle: 120°C 레토르트 대응 친환경 NB캔 혁신 플랫폼
+bottomTitle: 레토르트캔
+
+### slide2_20251219-162045.json
+mainHeading: 플라스틱 규제 강화와 재활용 한계 문제
+issue1Title: 정책 대응
+issue1Description: 정부의 일회용 플라스틱 사용 규제 강화로 기존 포장재 사용이 제한됨.
+issue2Title: 환경 부담
+issue2Description: 플라스틱 포장재 폐기물 증가와 탄소 배출로 환경 보존에 어려움이 발생함.
+issue3Title: 맞춤 생산
+issue3Description: 대량생산 중심 시스템으로 중소기업의 소량 다품종 주문 수요를 충족하지 못함.
+
+### slide3_20251219-162045.json
+mainTitle: 친환경 알루미늄 NB캔 도입 필요성
+rows: [{'division': '내열성', 'asIs': '일반 알루미늄 캔은 120°C 고온 살균에 취약함', 'toBe': '120°C·20분 레토르트 살균을 견디는 고내열 NB캔 제공'}, {'division': '차단성', 'asIs': '산소·습기 침투로 내용물 변질 위험함', 'toBe': '고차단 구조로 내용물 신선도 장기 유지'}, {'division': '재활용성', 'asIs': '복합소재 캔은 재활용이 어려움', 'toBe': '알루미늄 단일 소재로 재활용성 극대화'}, {'division': '재밀봉성', 'asIs': '기존 캔은 재밀봉 불가능함', 'toBe': '재밀봉 기능으로 보관 편의성 향상'}]
+
+### slide4_20251219-162045.json
+leftTopDescription: 세계 RTD 음료 시장은 연평균 5~8% 성장하며 친환경 포장 수요가 급증하고 있음.
+tamAmount: 223억$
+tamMarketName: 글로벌 RTD 시장
+tamDescription: 2024년 기준 223억 달러 규모로 2035년까지 300억 달러로 성장 전망됨.
+samAmount: 4.9조
+samMarketName: 국내 RTD 시장
+samDescription: 2025년 약 4조 9,100억 원 규모로 연평균 4.1% 성장 중인 시장임.
+somAmount: 600억
+somMarketName: OEM/ODM 시장
+somDescription: 한국·베트남 RTD 시장 내 10~15% 점유율 확보를 목표로 한 초기 수익 영역임.
+leftBottomDescription: 대기업 중심 대량생산 체계가 소량 다품종 수요를 충족하지 못해 시장 기회 존재함.
+
+### slide5_20251219-162045.json
+personName: 김민수
+personInfoItems: [{'value': '30~45세'}, {'value': '모든 성별'}, {'value': '브랜드 기획'}, {'value': '연 6천만'}]
+lifestyleContent: • 중소 RTD 브랜드 기획·생산을 담당하며 친환경 포장재 연구를 수행함.
+• 다양한 제품 라인업 확대를 위해 소량 다품종 생산 역량을 중시함.
+needsContent: • 고온 멸균과 재활용을 모두 충족하는 패키징 솔루션을 원함.
+• OEM/ODM 기반 맞춤 생산과 패키징 플랫폼의 편의성을 요구함.
+problemsContent: • 기존 플라스틱 포장은 고온 살균과 재활용성에서 한계를 경험함.
+• 대기업 중심 대량생산 체계로 소량 주문 대응에 어려움을 겪음.
+infoSourceContent: • 정부 보조금 안내와 산업 전시회 자료를 통해 기술 정보를 확보함.
+• 바이어 미팅과 산업 보고서를 통해 시장 트렌드를 조사함.
+decisionFactorsContent: • 고내열·고차단·재활용성 기능을 모두 갖춘 캔을 우선 검토함.
+• OEM/ODM 공급 역량과 맞춤형 패키징 플랫폼을 중요한 판단 요소로 삼음.
+avoidanceFactorsContent: • 초기 설비 투자 비용 부담과 기술 도입 난이도를 우려함.
+• 레토르트 공정 미지원 제품 도입 시 품질 저하를 경계함.
+
+### slide6_20251219-162045.json
+mainTitle: 친환경 고내열 NB캔으로 포장 문제 해결
+cards: [{'title': '소재 검증', 'description': '내면 코팅과 BOPET 필름 검증을 완료하여 고온 내식성을 확보함.'}, {'title': '구조 설계', 'description': 'NB캔 구조 보강 설계로 120°C 레토르트 살균 내열성을 강화함.'}, {'title': '시제품 테스트', 'description': '시제품 캡 체결 및 병목부 안정성 실험으로 기능을 검증 완료함.'}, {'title': '시장 확장', 'description': 'OEM/ODM 및 설비 수출, 디지털 플랫폼 결합으로 수요 대응을 확대함.'}]
+
+### slide7_20251219-162045.json
+strength1Title: 고온 멸균 기술
+strength1Description: 120°C·20분 레토르트 살균 대응 NB캔으로 식품 안전성과 유통 안정성을 확보함.
+strength2Title: 소량 맞춤 생산
+strength2Description: OEM/ODM 기반 소량 다품종 생산 체계로 중소·스타트업 고객 요구에 유연하게 대응함.
+strength3Title: 원스톱 솔루션
+strength3Description: 필름·제관 통합 패키징 플랫폼으로 설계부터 생산, 공급까지 통합 지원함.
+strength4Title: 친환경 지속성
+strength4Description: 알루미늄 단일 소재 활용으로 재활용성 극대화하며 탄소 배출 저감에 기여함.
+
+### slide8_20251219-162045.json
+table: [{'content': '내면 코팅·BOPET 필름 내열성 검증', 'performance': '내부'}, {'content': 'NB캔 구조 보강 설계 및 실험', 'performance': '내부'}, {'content': '병목부·캡 안정성 테스트 완료', 'performance': '내부'}, {'content': '산업 보고서로 시장 동향 분석', 'performance': '내부'}, {'content': '해외 전시회 바이어 미팅 진행', 'performance': '내부'}, {'content': '경쟁사 제품 호환성 검토', 'performance': '내부'}]
+ipr: {'items': [{'label': '• NB캔 특허 출원 완료', 'date': "'24.11"}, {'label': '• 디자인 상표 출원 완료', 'date': "'24.12"}, {'label': '• 실용신안 출원 준비', 'date': "'25.02"}, {'label': '• 제조 공정 특허 검토', 'date': "'25.04"}]}
+certification: {'items': [{'label': '• EU/FDA 적합 인증', 'date': "'24.09"}, {'label': '• 식품공전 기준 적합', 'date': "'24.11"}, {'label': '• 친환경 포장 인증', 'date': "'25.01"}, {'label': '• 산업안전보건 인증', 'date': "'25.05"}]}
+
+### slide9_20251219-162045.json
+journeyMap: [{'description': '정부 정책 강화로 친환경 포장 수요 인지함'}, {'description': '시장 조사와 산업 보고서로 기술 검토를 진행함'}, {'description': '프로토타입 시제품으로 성능 시험을 수행함'}, {'description': 'OEM/ODM 샘플 공급으로 초기 고객 확보함'}, {'description': '반복 주문으로 고객 만족도를 확인함'}, {'description': '현지 파트너 확대를 통한 수출 준비를 진행함'}]
+validationTable: [{'division': '시제품 검증', 'content': '내면 코팅·구조 설계 검증 후 120°C 실험 통과', 'period': "'24.11"}, {'division': '바이어 검증', 'content': '베트남 전시회서 바이어 15명 수요 요청 확보', 'period': "'24.12"}]
+metrics: [{'number': '15건'}, {'number': '1억'}, {'number': '4.8/5점'}]

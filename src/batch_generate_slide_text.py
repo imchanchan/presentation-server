@@ -6,13 +6,13 @@ import re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 from time import perf_counter
 
 import aiohttp
 from dotenv import load_dotenv
 
-from prompt import build_prompt
+from prompt_ba import message_prompt
 
 # 현재 파일 기준 경로 설정
 ROOT_DIR = Path(__file__).resolve().parents[1]  # 프로젝트 루트
@@ -36,10 +36,24 @@ MODEL = "o4-mini-2025-04-16"
 API_URL = "https://api.openai.com/v1/chat/completions"
 REQUEST_TIMEOUT = aiohttp.ClientTimeout(total=120)
 
-# 동시 실행 설정 및 재시도 전략
-CONCURRENCY = 3
+# 재시도 전략
 MAX_ATTEMPTS_PER_BATCH = 3
 BASE_BACKOFF_SECONDS = 2.0
+
+
+# -----------------------------
+# * 기본 배치 구성을 사용 : no
+# -----------------------------
+# 기본 배치 구간 정의 (start, end, description)
+DEFAULT_BATCH_DEFINITIONS: Tuple[Tuple[int, int, str], ...] = (
+    (1, 3, "표지 + 외내부동기 + 아이템필요성"),
+    (4, 5, "TAM·SAM·SOM + 시장분석"),
+    (6, 8, "해결방안 + 핵심가치 + 개발방안"),
+    (9, 10, "고객검증 + 경쟁사분석 및 경쟁력"),
+    (11, 14, "비즈니스모델 + 수익모델 + 시장전략 + 성과"),
+    (15, 16, "로드맵 + 자금조달 및 소요계획"),
+    (17, 18, "팀소개 + 비전 및 결론"),
+)
 
 # 디버그 시 실패한 배치 raw 응답 저장
 DEBUG_DUMP_FAILED_OUTPUT = os.getenv("DEBUG_DUMP_FAILED_OUTPUT", "0") == "1"
@@ -61,19 +75,92 @@ class BatchResult:
     messages: List[str]
 
 
-def build_instruction_for_batch(start: int, end: int) -> str:
+def _default_batches() -> List[Batch]:
+    return [Batch(start, end, desc) for start, end, desc in DEFAULT_BATCH_DEFINITIONS]
+
+def _parse_batch_string(entry: str) -> Batch:
+    """start-end[:desc] 형태 문자열을 Batch로 변환 (단일 번호도 허용)."""
+    match = re.match(r"^(\d+)(?:-(\d+))?(?::(.+))?$", entry.strip())
+    if not match:
+        raise ValueError(
+            f"배치 입력 '{entry}' 형식을 인식할 수 없습니다. 예) 1-3:표지"
+        )
+
+    start, end, desc = match.groups()
+    start_i = int(start)
+    end_i = int(end) if end else start_i
+    if end_i < start_i:
+        raise ValueError(f"배치 입력 '{entry}'에서 끝({end_i})이 시작({start_i})보다 작습니다.")
+
+    description = desc.strip() if desc else f"슬라이드 {start_i}~{end_i}"
+    return Batch(start_i, end_i, description)
+
+
+def _prompt_use_default_batches() -> bool:
+    while True:
+        choice = input("기본 배치 구성을 사용할까요? (Y/n): ").strip().lower()
+        if choice in ("", "y", "yes"):
+            return True
+        if choice in ("n", "no"):
+            return False
+        print("Y 또는 N으로 입력해주세요.")
+
+
+def _prompt_manual_batches() -> List[Batch]:
+    while True:
+        raw = input(
+            "사용할 배치 범위를 입력하세요 (예: 1-4, 5-7, 8-10 또는 1-4:표지): "
+        ).strip()
+        if not raw:
+            print("빈 입력입니다. 다시 입력해주세요.")
+            continue
+
+        entries = [part.strip() for part in re.split(r"[,\s]+", raw) if part.strip()]
+        if not entries:
+            print("배치 정보를 인식하지 못했습니다. 다시 입력해주세요.")
+            continue
+
+        try:
+            return [_parse_batch_string(entry) for entry in entries]
+        except ValueError as exc:
+            print(f"입력 오류: {exc}")
+
+
+def prompt_batches_interactively() -> List[Batch]:
+    if _prompt_use_default_batches():
+        return _default_batches()
+    return _prompt_manual_batches()
+
+
+def _format_prompt_messages(messages: Union[str, List[Dict[str, Any]]]) -> str:
+    """prompt_batch의 messages 리스트를 텍스트 블록으로 직렬화."""
+    if isinstance(messages, str):
+        return messages.strip()
+
+    formatted_blocks: List[str] = []
+    for idx, message in enumerate(messages, start=1):
+        role = message.get("role", "user")
+        content = (message.get("content") or "").strip()
+        formatted_blocks.append(f"[{role} #{idx}]\n{content}")
+    return "\n\n".join(formatted_blocks)
+
+
+def build_instruction_for_batch(html: str, start: int, end: int) -> str:
     """배치 범위에 맞춘 instruction 문자열 생성."""
     prompt_body = ""
     for idx in range(start, end + 1):
+        messages = message_prompt(idx, html)
         prompt_body += (
             "=" * 10
             + "\n"
-            + f"해당슬라이드번호는 {idx} 슬라이드입니다. 추출 프롬프트는 다음과 같습니다.\n >>"
-            + build_prompt(idx)
+            + f"해당슬라이드번호는 {idx} 슬라이드입니다. 추출 프롬프트는 다음과 같습니다.\n"
+            + _format_prompt_messages(messages)
             + "\n"
             + "=" * 10
             + "\n"
         )
+        # if idx == start :
+            # print(messages)
 
     instruction = f"""
 아래 HTML 문서를 기반으로, 슬라이드 {start}~{end}에 해당하는 내용을 각각 독립된 JSON 객체로 생성하세요.
@@ -157,12 +244,23 @@ async def call_gpt_with_context(
         "messages": [
             {
                 "role": "system",
-                "content": "주어진 HTML정보로 IR Deck 슬라이드를 만들어야해. 너는 HTML 정보를 사용해 슬라이드별 필요한 텍스트를 JSON으로 구조화하는 전문가야.",
+                "content": "주어진 HTML정보로 IR Deck 슬라이드를 만들어야해. 너는 HTML 정보를 사용해 슬라이드별 필요한 텍스트를 JSON으로 구조화하는 전문가야."
+                " role: assistant에서 content는 참고만해야하는 예제야. 절대로 그대로 출력해서는 안돼.",
             },
-            {"role": "user", "content": f"다음은 HTML 전체 내용이다:\n{html}"},
+            {"role": "user", "content": f"이번에는 이 사업 내용으로 작성해줘.:\n{html}"},
             {"role": "user", "content": instruction},
         ],
     }
+
+    # payload = {
+    #     "model" : MODEL, 
+    #     "messages": [
+    #         { "role": "developer", "content": "여기에 모델 행동 규칙/역할 지정" },
+    #         { "role": "user", "content":  },
+    #         { "role": "assistant", "content":  },
+    #         { "role": "user", "content": instruct + html }
+    #     ],
+    # }
 
     headers = {
         "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
@@ -200,14 +298,22 @@ async def run_one_batch(session: aiohttp.ClientSession, html: str, batch: Batch)
     try:
         await asyncio.sleep(0.8)  # 가벼운 rate-limit 완화 딜레이
 
-        instruction = build_instruction_for_batch(start, end)
+        instruction = build_instruction_for_batch(html, start, end)
+
+        instruction_path = OUTPUT_DIR / f"instruction_{label}.txt"
+        instruction_path.parent.mkdir(parents=True, exist_ok=True)
+        instruction_path.write_text(instruction, encoding="utf-8")
+        
         result_text, call_logs = await call_gpt_with_context(
             session=session,
             html=html,
             instruction=instruction,
             batch_label=label,
         )
-        messages.extend()
+
+        print("**html", len(html))
+        print('**GPT:', result_text )
+        messages.extend(call_logs)
         if not result_text:
             elapsed = perf_counter() - started_at
             summary = (
@@ -215,6 +321,13 @@ async def run_one_batch(session: aiohttp.ClientSession, html: str, batch: Batch)
                 f"(소요 {elapsed:.2f}s)"
             )
             return BatchResult(batch=batch, success=False, summary=summary, messages=messages)
+
+        # GPT 원본 응답을 txt로 보관
+        result_dump_dir = OUTPUT_DIR / "raw_results"
+        result_dump_dir.mkdir(parents=True, exist_ok=True)
+        dump_path = result_dump_dir / f"result_{label}_{datetime.now().strftime('%Y%m%d-%H%M%S')}.txt"
+        dump_path.write_text(result_text, encoding="utf-8")
+        messages.append(f"📝 GPT 원본 응답 저장 → {dump_path}")
 
         saved_files, save_logs = save_split_json_results(
             content=result_text,
@@ -262,36 +375,23 @@ async def run_one_batch(session: aiohttp.ClientSession, html: str, batch: Batch)
 
 
 async def process_batches_round(session: aiohttp.ClientSession, html: str, batches: List[Batch]) -> Tuple[List[Batch], List[str]]:
-    sem = asyncio.Semaphore(CONCURRENCY)
     failed_next: List[Batch] = []
-    results: List[Optional[BatchResult]] = [None] * len(batches)
+    logs: List[str] = []
 
-    async def runner(idx: int, batch: Batch) -> BatchResult:
-        async with sem:
-            outcome = await run_one_batch(session, html, batch)
-            results[idx] = outcome
-            if not outcome.success and outcome.batch.attempt < MAX_ATTEMPTS_PER_BATCH:
-                failed_next.append(
-                    Batch(
-                        outcome.batch.start,
-                        outcome.batch.end,
-                        outcome.batch.desc,
-                        outcome.batch.attempt + 1,
-                    )
-                )
-            return outcome  # ✅ 추가
-
-    tasks = [asyncio.create_task(runner(idx, b)) for idx, b in enumerate(batches)]
-
-    # ✅ 먼저 끝난 순서대로 실시간 로그 출력
-    for finished in asyncio.as_completed(tasks):
-        outcome = await finished
+    for batch in batches:
+        outcome = await run_one_batch(session, html, batch)
         print(outcome.summary)
 
-    logs: List[str] = []
-    for outcome in results:
-        if outcome is None:
-            continue
+        if not outcome.success and outcome.batch.attempt < MAX_ATTEMPTS_PER_BATCH:
+            failed_next.append(
+                Batch(
+                    outcome.batch.start,
+                    outcome.batch.end,
+                    outcome.batch.desc,
+                    outcome.batch.attempt + 1,
+                )
+            )
+
         logs.extend(outcome.messages)
         logs.append(outcome.summary)
 
@@ -306,7 +406,7 @@ async def run_all_batches_until_stable(session: aiohttp.ClientSession, html: str
     queue = list(initial_batches)
 
     while queue:
-        print(f"\n>> 라운드 {round_idx} 시작 — {len(queue)}개 배치 동시 실행")
+        print(f"\n>> 라운드 {round_idx} 시작 — {len(queue)}개 배치 순차 실행")
         failed_next, logs = await process_batches_round(session, html, queue)
 
         for line in logs:
@@ -338,25 +438,18 @@ def load_html() -> str:
     html = data.get("content", {}).get("html", "")
     if not html:
         raise ValueError("'content.html' 필드가 없습니다.")
+    
     return html
 
 
 
 async def main() -> None:
     html = load_html()
-    
-    initial_batches = [
-        Batch(1, 3, "표지 + 외내부동기 + 아이템필요성"),
-        Batch(4, 5, "TAM·SAM·SOM + 시장분석"),
-        Batch(6, 8, "해결방안 + 핵심가치 + 개발방안"),
-        Batch(9, 10, "고객검증 + 경쟁사분석 및 경쟁력"),
-        Batch(11, 14, "비즈니스모델 + 수익모델 + 시장전략 + 성과"),
-        Batch(15, 16, "로드맵 + 자금조달 및 소요계획"),
-        Batch(17, 18, "팀소개 + 비전 및 결론"),
-    ]
+
+    initial_batches = prompt_batches_interactively()
 
     async with aiohttp.ClientSession(timeout=REQUEST_TIMEOUT) as session:
-        print(f"🚀 {len(initial_batches)}개 배치를 동시에 실행합니다.")
+        print(f"🚀 {len(initial_batches)}개 배치를 순차적으로 실행합니다.")
         await run_all_batches_until_stable(session, html, initial_batches)
 
     print("\n🎉 모든 배치 처리 파이프라인 종료")

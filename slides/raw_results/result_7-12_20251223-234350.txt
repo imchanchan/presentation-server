@@ -1,0 +1,116 @@
+{
+"strength1Title": "120°C 고온 레토르트 기술",
+"strength1Description": "120°C·20분 고온 레토르트 살균이 가능한 NB캔을 통해 식품 안전성과 보존성을 동시 확보함.",
+"strength2Title": "친환경 단일 소재 설계",
+"strength2Description": "알루미늄 단일 소재 적용으로 재활용성을 극대화하며 탄소 배출 저감과 지속 가능성 확보함.",
+"strength3Title": "소량 맞춤형 생산 플랫폼",
+"strength3Description": "OEM/ODM 기반 소량 다품종 생산 솔루션을 통해 중소기업과 스타트업의 다양화 수요에 유연 대응함.",
+"strength4Title": "디지털 패키징 통합솔루션",
+"strength4Description": "생산 자동화와 파트너 설비 수출, 플랫폼 기술을 결합해 통합 패키징 서비스를 제공함."
+}
+---
+{
+"table": [
+{ "content": "120°C 레토르트 캔 설계 및 구조 강화", "performance": "내부" },
+{ "content": "목부 강화 및 시제품 샘플 제작", "performance": "내부" },
+{ "content": "내열성·내압성·내식성 내부 테스트 수행", "performance": "내부" },
+{ "content": "외부 기관 KS·국제 기준 검증 테스트", "performance": "외주" },
+{ "content": "OEM/ODM 샘플 제공 및 피드백 수집", "performance": "내부" },
+{ "content": "최종 사양 확정 및 시제품 완성", "performance": "내부" }
+],
+"ipr": {
+"items": [
+{ "label": "• 특허 등록 완료", "date": "'26.06" },
+{ "label": "• 상표 등록 완료", "date": "'26.07" },
+{ "label": "• 디자인 등록 완료", "date": "'26.08" },
+{ "label": "• 실용신안 출원 완료", "date": "'26.09" }
+]
+},
+"certification": {
+"items": [
+{ "label": "• KS 인증 완료", "date": "'26.10" },
+{ "label": "• ISO 인증 완료", "date": "'26.11" },
+{ "label": "• 친환경 인증 획득", "date": "'26.12" },
+{ "label": "• 안전성 평가 완료", "date": "'27.01" }
+]
+}
+}
+---
+{
+"journeyMap": [
+{ "description": "정부 정책으로 친환경 NB캔 인지" },
+{ "description": "OEM/ODM 솔루션 검토 진행" },
+{ "description": "시제품 샘플 주문 및 검증" },
+{ "description": "고온 살균 품질 확인 수행" },
+{ "description": "맞춤 생산 반복 의뢰 진행" },
+{ "description": "인증 획득 후 추천 확산함" }
+],
+"validationTable": [
+{ "division": "시제품검증", "content": "시제품 NB캔을 통한 소비자 파일럿 테스트 완료", "period": "'26.10" },
+{ "division": "바이어미팅", "content": "해외 전시회 바이어와 1:1 기술 검증 협의 진행", "period": "'24.12" }
+],
+"metrics": [
+{ "number": "15개" },
+{ "number": "2억원" },
+{ "number": "4.8/5점" }
+]
+}
+---
+{
+"mainHeading": "친환경 고내열 NB캔으로 시장 혁신 주도",
+"headerCompetitor1": "동원시스템즈",
+"headerCompetitor2": "다이와제관",
+"headerCompetitor3": "Ball Corp",
+"headerOurCompany": "레토르트캔",
+"row1Competitor1": "표준 알루미늄 캔 대량 생산 서비스 제공함",
+"row1Competitor2": "대형 음료사 중심 표준 캔 대량 공급 서비스",
+"row1Competitor3": "북미·유럽 중심 NB캔 대량 공급 네트워크 보유",
+"row1OurCompany": "120°C 레토르트 살균 NB캔 공급으로 차별화",
+"row2Competitor1": "대량 할인 적용하나 소량 단가 경쟁력은 낮음",
+"row2Competitor2": "할인 쿠폰 중심으로 가격 경쟁력 강화함",
+"row2Competitor3": "대량 공급 단가 우수하나 소량 대응 한계 존재",
+"row2OurCompany": "소량 맞춤 생산에 최적화된 경쟁력 있는 단가",
+"row3Competitor1": "대량 생산 인프라로 안정적 공급 역량 보유함",
+"row3Competitor2": "다양한 할인 혜택으로 고객 충성도 제고함",
+"row3Competitor3": "광범위 공급망으로 글로벌 시장 접근 용이함",
+"row3OurCompany": "맞춤형 소량 생산과 고내열 기술로 차별화",
+"row4Competitor1": "소량·다품종 생산 대응에 명확한 한계 존재",
+"row4Competitor2": "소량 주문 시 단가 경쟁력 확보 어려움",
+"row4Competitor3": "레토르트용 고온 캔은 일부 제품에 한정",
+"row4OurCompany": "초기 설비 투자 비용 부담이 주요 과제"
+}
+---
+{
+"nodes": [
+{ "id": "customer", "label": "음료사" },
+{ "id": "company", "label": "자사" },
+{ "id": "partner1", "label": "OEM사" },
+{ "id": "partner2", "label": "설비사" }
+],
+"customerToCompanyTop": "제품 주문 비용",
+"customerToCompanyBottom": "고내열 NB캔",
+"companyTopartner1Left": "생산 수수료",
+"companyTopartner1Right": "맞춤형 캔 공급",
+"companyTopartner2Top": "설비 판매",
+"companyTopartner2Bottom": "기술 지원"
+}
+---
+{
+"deliveryFeeTitle": "- NB캔 OEM/ODM 매출 -",
+"deliveryFeeList": "• 공급 단가 120원/개\n• 설비 판매 단가 1.2억원/기\n• 기술 이전 수수료 5천만원\n• 플랫폼 연간 구독 3천만원",
+"adCostTitle": "- 설비 수출 매출 -",
+"adCostList": "• 설비 수출 단가 1.2억원/기\n• 기술 이전 5천만원/건\n• 플랫폼 유지보수 연 1천만원\n• 추가 모듈 개발 수익",
+"yAxisLabel150": "150",
+"yAxisLabel100": "100",
+"yAxisLabel50": "50",
+"chartCategories": [
+{ "key": "category1", "label": "OEM매출", "color": "#C8D2F8" },
+{ "key": "category2", "label": "설비매출", "color": "#566FBF" }
+],
+"chartData": [
+{ "year": "2026", "category1": "8", "category2": "2" },
+{ "year": "2027", "category1": "18", "category2": "2" },
+{ "year": "2028", "category1": "30", "category2": "5" },
+{ "year": "2029", "category1": "50", "category2": "15" }
+]
+}

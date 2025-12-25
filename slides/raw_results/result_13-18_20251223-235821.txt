@@ -1,0 +1,61 @@
+---  
+{  
+"mainTitle": "친환경 포장으로 지속 가능한 지구보전 비전 제시",  
+"subTitle": "탄소 배출 저감, 재활용률 향상, 생산 공정 혁신으로 환경 보호와 지속 가능성 확보",  
+"strategyCards": [  
+  { "title": "탄소저감", "description": "알루미늄 단일 소재 NB캔 적용으로 제조과정 탄소 배출을 획기적으로 줄이고 선제적 규제 대응 역량을 확보함" },  
+  { "title": "재활용촉진", "description": "알루미늄 NB캔의 높은 재활용성을 활용해 폐기물 발생을 최소화하고 재활용 순환 체계 강화로 환경 부담을 경감함" },  
+  { "title": "공정혁신", "description": "생산 공정 자동화 및 디지털화로 자원 효율을 극대화하고 무폐기 공정 전환을 통해 지속 가능한 제조 시스템을 구현함" }  
+]  
+}  
+---  
+{  
+"tableHeaderYear1": "2025년", "tableHeaderYear2": "2026년", "tableHeaderYear3": "2027년", "tableHeaderYear4": "2028년",  
+"row1Year1": "12억원", "row1Year2": "21억원", "row1Year3": "37억원", "row1Year4": "70억원",  
+"row2Year1": "0.3억원", "row2Year2": "1억원", "row2Year3": "5억원", "row2Year4": "15억원",  
+"row3Year1": "50억원", "row3Year2": "150억원", "row3Year3": "400억원", "row3Year4": "800억원",  
+"row4Year1": "2명", "row4Year2": "4명", "row4Year3": "10명", "row4Year4": "20명",  
+"row5Year1": "특허1건", "row5Year2": "특허3건", "row5Year3": "특허5건", "row5Year4": "특허7건",  
+"row6Year1": "ISO 인증", "row6Year2": "벤처 인증", "row6Year3": "GS 인증", "row6Year4": "녹색기업",  
+"row7Year1": "1만사", "row7Year2": "3만사", "row7Year3": "10만사", "row7Year4": "20만사"  
+}  
+---  
+{  
+"mainTitle": "2030년 기업가치 2,000억원 달성 및 M&A 준비",  
+"phase1YearGoal": "2025년\n시제품 완성",  
+"phase1ObjectiveTitle": "목표: 시제품 10종 제작",  
+"phase1Strategy": "고내열 NB캔(300/400ml) 시제품 설계 완료 후 내부·외부 시험기관 검증을 통해 품질 안정성을 확보함",  
+"phase2YearGoal": "2026년\nOEM 공급 개시",  
+"phase2ObjectiveTitle": "목표: 5개 OEM사 계약",  
+"phase2Strategy": "초기 바이어 대상 샘플 제공과 피드백 반영을 통해 맞춤형 패키징 플랫폼 구축 및 시장 검증을 완료함",  
+"phase3YearGoal": "2027년\n글로벌 진출",  
+"phase3ObjectiveTitle": "목표: 수출 3개국 확대",  
+"phase3Strategy": "베트남·아세안·일본 주요 파트너사와 현지 협업을 강화하고 해외 전시회 참가로 OEM·ODM 수출 채널을 확보함",  
+"phase4YearGoal": "2028년\n플랜트 구축",  
+"phase4ObjectiveTitle": "목표: 설비 수출 2세트",  
+"phase4Strategy": "금속·필름 복합 패키징 플랜트 표준화 설비 패키지 완성 후 현지 JV 설립 기반 구축 및 설비 수출 확대 추진함"  
+}  
+---  
+{  
+"fundingPlan1Year": "2025년",  
+"fundingPlan1Content": "예비창업패키지 1억\n신보 융자 2억",  
+"fundingPlan2Year": "2026년",  
+"fundingPlan2Content": "초기창업패키지 3억\nPre Seed 투자 1억",  
+"fundingPlan3Year": "2027년",  
+"fundingPlan3Content": "디딤돌 R&D 과제 2억\nSeed 투자 3억",  
+"fundingPlan4Year": "2028년",  
+"fundingPlan4Content": "TIPS 지원 5억\nPre A 투자 10억"  
+}  
+---  
+{  
+"team1Position": "대표", "team1Name": "김민준", "team1Description": "금속·필름 공정 전문가\n레토르트 캔 기술 개발\nOEM/ODM 사업 총괄",  
+"team2Position": "개발책임", "team2Name": "이서현", "team2Description": "BOPET 필름 검증 경험\n디지털 공정 자동화 개발\n시스템 통합 관리",  
+"team3Position": "R&D 리더", "team3Name": "박지후", "team3Description": "내열 코팅·내식성 연구\n고온 살균 테스트 수행\n신소재 적용 설계",  
+"team4Position": "영업총괄", "team4Name": "정하은", "team4Description": "국내 OEM 네트워크 구축\n해외 바이어 직접 영업\n패키징 솔루션 제안"  
+}  
+---  
+{  
+"visionStatement": "2025.10.01 정식 런칭 기념 20% 할인 제공",  
+"coreMessage": "친환경 패키징 혁신으로 글로벌 시장에서 지속 가능한 가치를 창출하겠습니다.",  
+"closingRemark": "대표자: 김민준\n회사명: 친환경NB캔\n연락처: 010-1234-5678\n이메일: kim@example.com"  
+}

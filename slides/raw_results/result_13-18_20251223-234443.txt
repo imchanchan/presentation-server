@@ -1,0 +1,68 @@
+{  
+"mainTitle": "국내·해외 온·오프라인 판매 전략 체계",  
+"subTitle": "디지털 플랫폼과 B2B 채널 구축을 통한 국내외 판매망 확대 및 매출 증대 도모",  
+"strategyCards": [  
+  { "title": "온라인 플랫폼", "description": "OEM/ODM 고객 전용 온라인 플랫폼 개설을 통해 견적·디자인 커스터마이징과 샘플 발주 프로세스를 디지털화하여 진입장벽을 낮추고 초기 거래를 유도함." },  
+  { "title": "전시회 참여", "description": "국내외 식음료 및 포장 산업 전시회에 참가하여 NB캔 기술 시연과 1:1 바이어 미팅을 통해 신규 고객 네트워크를 확장하고 기술 검증을 확보함." },  
+  { "title": "콘텐츠 마케팅", "description": "유튜브·블로그·뉴스레터를 통해 레토르트 살균 기술과 친환경 NB캔 적용 사례를 콘텐츠화하여 브랜드 인지도와 문의 유입을 강화함." }  
+]  
+}  
+---  
+{  
+"tableHeaderYear1": "2025년", "tableHeaderYear2": "2026년", "tableHeaderYear3": "2027년", "tableHeaderYear4": "2028년",  
+"row1Year1": "800백만원", "row1Year2": "1800백만원", "row1Year3": "3000백만원", "row1Year4": "5000백만원",  
+"row2Year1": "200백만원", "row2Year2": "200백만원", "row2Year3": "500백만원", "row2Year4": "1500백만원",  
+"row3Year1": "–", "row3Year2": "–", "row3Year3": "–", "row3Year4": "–",  
+"row4Year1": "–", "row4Year2": "–", "row4Year3": "–", "row4Year4": "–",  
+"row5Year1": "–", "row5Year2": "–", "row5Year3": "–", "row5Year4": "–",  
+"row6Year1": "–", "row6Year2": "–", "row6Year3": "–", "row6Year4": "–",  
+"row7Year1": "–", "row7Year2": "–", "row7Year3": "–", "row7Year4": "–"  
+}  
+---  
+{  
+"mainTitle": "4년 내 글로벌 NB캔 시장 선도",  
+"phase1YearGoal": "2025년\n시제품 개발 완료",  
+"phase1ObjectiveTitle": "시제품 설계 및 제작",  
+"phase1Strategy": "120°C 레토르트 살균 NB캔 시제품을 설계 완료하고 내열·내식성 검증을 통해 초기 테스트를 마무리함.",  
+"phase2YearGoal": "2026년\n생산라인 고도화",  
+"phase2ObjectiveTitle": "생산라인 구축",  
+"phase2Strategy": "OEM/ODM 자동화 생산라인을 도입하여 소량 다품종 주문을 유연하게 처리할 수 있도록 시스템을 구축함.",  
+"phase3YearGoal": "2027년\n국내 샘플 공급",  
+"phase3ObjectiveTitle": "국내 공급 개시",  
+"phase3Strategy": "국내 식음료 기업 대상 파일럿 테스트를 통해 샘플을 제공하고 피드백을 반영하여 상용 공급 기반을 마련함.",  
+"phase4YearGoal": "2028년\n해외 시장 확장",  
+"phase4ObjectiveTitle": "해외 진출 개시",  
+"phase4Strategy": "아세안·일본 시장의 파트너사와 협업하여 OEM/ODM 공급을 시작하고 설비 수출 및 현지 인프라 구축을 추진함."  
+}  
+---  
+{  
+"fundingPlan1Year": "2026년",  
+"fundingPlan1Content": "친환경 제조 설비 보조금\n세제 혜택 확대",  
+"fundingPlan2Year": "2027년",  
+"fundingPlan2Content": "초기 창업 패키지 지원\nPre-Seed 투자 유치",  
+"fundingPlan3Year": "2028년",  
+"fundingPlan3Content": "R&D 과제 수주\nSeed 단계 투자 확보",  
+"fundingPlan4Year": "2029년",  
+"fundingPlan4Content": "Series A 투자 유치\nIPO 준비 자금 확보"  
+}  
+---  
+{  
+"team1Position": "대표",  
+"team1Name": "이준호",  
+"team1Description": "금속·필름 복합공정 전문가\n다수 OEM/ODM 프로젝트 수행\n레토르트 NB캔 기술 개발 주도",  
+"team2Position": "기술책임",  
+"team2Name": "정민서",  
+"team2Description": "내면 코팅·필름 검증 주관\nR&D 테스트 설계 및 수행\n식품공전 기준 검증 완료",  
+"team3Position": "생산책임",  
+"team3Name": "김하영",  
+"team3Description": "생산라인 설계 및 자동화 도입\nOEM/ODM 생산 운영 관리\n품질·안전 시스템 구축",  
+"team4Position": "영업총괄",  
+"team4Name": "박성진",  
+"team4Description": "국내외 바이어 네트워킹\n글로벌 B2B 채널 확대\n고객 검증 및 수주 협상"  
+}  
+---  
+{  
+"visionStatement": "친환경 NB캔으로 세계 시장을 선도합니다",  
+"coreMessage": "지속 가능성과 기술 혁신으로 글로벌 포장업계를 리딩하겠습니다",  
+"closingRemark": "대표자: 이준호\n회사명: 에코패키징\n연락처: 010-1234-5678\n이메일: info@ecopack.com"  
+}

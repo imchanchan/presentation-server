@@ -12,8 +12,8 @@ from pymongo.errors import ConfigurationError
 
 
 
-DEFAULT_COLLECTION_NAME = "retort"
-
+# DEFAULT_COLLECTION_NAME = "cashbrush"
+DEFAULT_COLLECTION_NAME = "retort_1219_one"
 
 def load_env():
     project_root = Path(__file__).resolve().parents[1]

@@ -1,0 +1,63 @@
+### slide10_20251223-000416.json
+mainHeading: 120°C 레토르트 캔 기술로 차별화된 공급
+headerCompetitor1: 동원시스템즈
+headerCompetitor2: 다이와제관
+headerCompetitor3: Ball Corp
+headerOurCompany: #레토르트캔
+row1Competitor1: 대량생산 중심 표준 알루미늄 캔 공급
+row1Competitor2: 일본계 대형 음료사 중심 표준 캔 공급
+row1Competitor3: 북미·유럽 대상 대량 NB캔 공급
+row1OurCompany: 고온·재밀봉 가능한 맞춤형 알루미늄 NB캔 제공
+row2Competitor1: 대량 할인 중심 단가이점 있으나 소량 비효율
+row2Competitor2: 대량 할인 중심 단가이점 있으나 소량 비효율
+row2Competitor3: 대량 할인 중심 단가이점 있으나 소량 비효율
+row2OurCompany: 소량·커스텀 생산 최적화된 경쟁적 단가 구조
+row3Competitor1: 대량·표준 생산 중심 유연성 부족
+row3Competitor2: 대량·표준 생산 중심 유연성 부족
+row3Competitor3: 대량·표준 생산 중심 유연성 부족
+row3OurCompany: 소량·다품종·커스텀 생산에 강점 보유
+row4Competitor1: 제품 공급 중심 기술 지원은 제한적
+row4Competitor2: 제품 공급 중심 기술 지원은 제한적
+row4Competitor3: 제품 공급 중심 기술 지원은 제한적
+row4OurCompany: 필름·제관 통합 기술지원 원스톱 솔루션 제공
+
+### slide1_20251223-000434.json
+subtitle: 친환경 NB캔 사업계획서 발표
+mainTitle: 120℃ 레토르트 살균 친환경 알루미늄 NB캔
+bottomTitle: 레토르트캔
+
+### slide2_20251223-000434.json
+mainHeading: 플라스틱 규제 강화로 친환경 캔 공급 부족
+issue1Title: 정책 변화
+issue1Description: 정부의 일회용 플라스틱 규제 강화로 알루미늄 NB캔 수요가 급증하나 생산 기반과 정책 지원은 부족함.
+issue2Title: 시장 기회
+issue2Description: RTD 음료 시장이 연평균 4.1% 성장하며 친환경 NB캔 수요가 확대되나 대량생산 위주로 중소기업 수요는 미충족함.
+issue3Title: 생산 한계
+issue3Description: 기존 캔 제조 기술은 120℃ 레토르트 살균과 소량 맞춤 생산 요구를 충족하지 못해 자동화도 부재함.
+
+### slide3_20251223-000434.json
+mainTitle: 높은 온도 살균과 지속가능 패키징 요구 충족
+rows: [{'division': '내열성', 'asIs': '알루미늄 캔은 120℃ 레토르트 살균에 취약함', 'toBe': '120℃ 고온 살균 견디는 고내열 NB캔 제공'}, {'division': '차단성', 'asIs': '산소와 습기 침투로 내용물 변질 위험 있음', 'toBe': '고차단성 구조로 내용물 신선도 유지함'}, {'division': '재활용성', 'asIs': '복합소재 캔은 재활용 분리 공정에서 어려움', 'toBe': '알루미늄 단일 소재로 재활용성 극대화'}, {'division': '재밀봉성', 'asIs': '기존 캔은 개봉 후 재밀봉 기능이 불가능함', 'toBe': '재밀봉 기능으로 보관 편의성 향상함'}]
+
+### slide4_20251223-000434.json
+leftTopDescription: RTD 음료와 즉석식품 금속 캔 시장이 글로벌 수요 증가로 지속 성장함.
+tamAmount: 8.5조원
+tamMarketName: 글로벌 금속 캔 시장
+tamDescription: 글로벌 RTD 음료 223억 달러와 즉석식품 1,500억 달러 중 금속 캔 사용 비중을 산정함
+samAmount: 3조원
+samMarketName: 아세안·한·일 NB캔 시장
+samDescription: 아세안·일본·한국·베트남 RTD 및 즉석식품용 친환경 NB캔 수요 기반 산정함
+somAmount: 600억
+somMarketName: 한·베 NB캔 OEM시장
+somDescription: 한국·베트남 RTD용 NB캔 OEM 공급 및 설비 수출 시장으로 초기 점유율 10~15% 목표로 산정함
+leftBottomDescription: 중소기업 OEM 공급과 친환경 플랫폼 솔루션으로 대형 경쟁사와 차별화된 시장 지위 확보함
+
+### slide8_20251223-000416.json
+table: [{'content': '친환경 NB캔 구조 설계 및 내열성 검증 수립', 'performance': '내부'}, {'content': 'NB캔 및 목부 샘플 제작과 1차 생산', 'performance': '내부'}, {'content': '내열·내압·내식성 내부 테스트 수행', 'performance': '내부'}, {'content': '외부 기관 KS·국제 기준 검증 수행', 'performance': '외부'}, {'content': 'OEM/ODM 샘플 제공 후 피드백 반영', 'performance': '내부'}, {'content': '최종 사양 확정 및 시제품 완성', 'performance': '내부'}]
+ipr: {'items': [{'label': '• 특허 등록 완료', 'date': "'26.10"}, {'label': '• 상표 등록 완료', 'date': "'26.10"}, {'label': '• 실용신안 계획 없음', 'date': "'--.--"}, {'label': '• 디자인 등록 계획 없음', 'date': "'--.--"}]}
+certification: {'items': [{'label': '• 환경 인증 준비 중', 'date': "'--.--"}, {'label': '• 식품위생 인증 준비 중', 'date': "'--.--"}, {'label': '• ISO 인증 준비 중', 'date': "'--.--"}, {'label': '• KC 인증 준비 중', 'date': "'--.--"}]}
+
+### slide9_20251223-000416.json
+journeyMap: [{'description': '정책 강화로 친환경 캔 수요 인지'}, {'description': '레토르트 살균 캔 기술 검토'}, {'description': '시제품 제공 후 OEM 계약 진행'}, {'description': 'NB캔으로 RTD 제품 포장 적용'}, {'description': '성공 경험 바탕 추가 주문 요청'}, {'description': '사례 공유로 신규 거래처 확장 유도'}]
+validationTable: [{'division': '산업 보고', 'content': '글로벌 RTD 커피 시장 규모 및 성장 전망 확인', 'period': "'24.11"}, {'division': '바이어 검증', 'content': '베트남 Expo 바이어 15명 인터뷰 요청 수렴', 'period': "'24.12"}]
+metrics: [{'number': '15사'}, {'number': '0.8억원'}, {'number': '4.8/5점'}]
